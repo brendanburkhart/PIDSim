@@ -22,24 +22,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++11 qwt
+CONFIG += c++11 qwt static
 
 SOURCES += \
         angularsim.cpp \
+        graph.cpp \
+        inputgraph.cpp \
         linearsim.cpp \
         main.cpp \
         mainwindow.cpp \
         model.cpp \
-        pid.cpp \
-        sine.cpp
+        outputgraph.cpp \
+        pid.cpp
 
 HEADERS += \
         angularsim.h \
+        graph.h \
+        inputgraph.h \
         linearsim.h \
         mainwindow.h \
         model.h \
-        pid.h \
-        sine.h
+        outputgraph.h \
+        pid.h
 
 FORMS += \
         mainwindow.ui

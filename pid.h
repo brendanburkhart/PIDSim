@@ -1,14 +1,16 @@
 #ifndef PID_H
 #define PID_H
 
+#include <tuple>
 
 class PID
 {
 public:
-    PID(double p, double i, double d, double inputMin, double inputMax, bool continuous, double timeStep);
+    PID(double p, double i, double d, double inputMin, double inputMax, double outputMin, double outputMax, bool continuous, double timeStep);
+    virtual ~PID();
 
     void initialize(double input, double output);
-    double calculateOutput(double intput, double setpoint);
+    std::tuple<double, double, double, double> calculateOutput(double intput, double setpoint);
 
     void setP(double p);
     void setI(double p);
@@ -22,6 +24,7 @@ public:
 
     void setContinuous(bool continuous);
     void setDerivativeOnInput(bool on);
+
 private:
     double calculateContinuousError(double error);
     double p = 0.0, i = 0.0, d = 0.0;

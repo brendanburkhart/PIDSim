@@ -19,13 +19,19 @@ public:
     double getI();
     double getD();
 
+    virtual std::pair<double, double> inputRange() = 0;
+    virtual std::pair<double, double> outputRange() = 0;
+
 public slots:
     void setP(double p);
     void setI(double i);
     void setD(double d);
 
+    virtual void reset() = 0;
+
 signals:
-    void modelUpdated(double sp, double pos);
+    void modelUpdated(double sp, double input);
+    void outputUpdated(double output, double p, double i, double d);
 
 protected:
     double timeStep = 0.02;

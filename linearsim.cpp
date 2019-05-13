@@ -7,23 +7,38 @@
 
 LinearSim::LinearSim(QWidget *parent): Model(parent)
 {
-    pid = new PID(0.0, 0.0, 0.0, -100.0, 100.0, false, timeStep);
+    pid = new PID(0.0, 0.0, 0.0, -100.0, 100.0, -200.0, 200.0, false, timeStep);
     pid->setDerivativeOnInput(true);
 }
 
 void LinearSim::updateModel()
 {
-    double output = pid->calculateOutput(position, setpoint);
+    std::tuple<double, double, double, double> output = pid->calculateOutput(position, setpoint);
+
+    emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output));
 
     //double sign = (0.0 < velocity) - (velocity < 0.0);
     //double air_resistance = sign * velocity * velocity;
     velocity -= gravity * timeStep;
-    velocity += output * timeStep;
+    velocity += std::get<0>(output) * timeStep;
     position += velocity * timeStep;
 
     emit modelUpdated(setpoint, position);
 
     repaint();
+}
+
+std::pair<double, double> LinearSim::inputRange()
+{
+    int side = qMin(width(), height());
+    double h = height() * 200.0 / side;
+    return std::pair<double, double>(-0.5 * h, 0.5 * h);
+}
+
+
+std::pair<double, double> LinearSim::outputRange()
+{
+    return std::pair<double, double>(-200, 200);
 }
 
 void LinearSim::paintEvent(QPaintEvent *) {
@@ -48,6 +63,14 @@ void LinearSim::paintEvent(QPaintEvent *) {
     p.setBrush(Qt::NoBrush);
     p.setPen(QPen(spColor, 1));
     p.drawLine(-int(w/3), -int(setpoint), int(w/3), -int(setpoint));
+}
+
+void LinearSim::reset()
+{
+    setpoint = 75;
+    position= 0.0;
+    velocity = 0.0;
+    pid->initialize(position, 0.0);
 }
 
 void LinearSim::mousePressEvent(QMouseEvent *e)

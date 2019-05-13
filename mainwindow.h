@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "sine.h"
+#include "inputgraph.h"
+#include "outputgraph.h"
 
 #include <QMainWindow>
 
@@ -24,13 +25,10 @@ public slots:
 
     void switchModel(int model);
 
-signals:
-    void modelEnabled();
-
 private:
     Ui::MainWindow *ui;
-    Sine *sinePlot;
-    Sine *sinePlot2;
+    InputGraph *inputGraph;
+    OutputGraph *outputGraph;
 };
 
 #endif // MAINWINDOW_H

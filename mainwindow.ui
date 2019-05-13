@@ -26,12 +26,12 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,2,1">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="6,9,2">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
         <item>
          <widget class="QwtPlot" name="qwtPlot">
-          <property name="canvasBackground">
+          <property name="canvasBackground" stdset="0">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
              <red>255</red>
@@ -44,7 +44,7 @@
         </item>
         <item>
          <widget class="QwtPlot" name="qwtPlot_2">
-          <property name="canvasBackground">
+          <property name="canvasBackground" stdset="0">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
              <red>255</red>
@@ -98,7 +98,7 @@
         <property name="leftMargin">
          <number>10</number>
         </property>
-        <item row="2" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="pLabel">
           <property name="font">
            <font>
@@ -111,7 +111,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="4" column="1">
          <widget class="QDoubleSpinBox" name="pSpinBox">
           <property name="font">
            <font>
@@ -133,7 +133,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item row="5" column="1">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -146,7 +146,7 @@
           </property>
          </spacer>
         </item>
-        <item row="5" column="0">
+        <item row="7" column="0">
          <widget class="QLabel" name="iLabel">
           <property name="font">
            <font>
@@ -161,7 +161,7 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
+        <item row="7" column="1">
          <widget class="QDoubleSpinBox" name="iSpinBox">
           <property name="font">
            <font>
@@ -183,7 +183,7 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
+        <item row="8" column="1">
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -196,7 +196,7 @@
           </property>
          </spacer>
         </item>
-        <item row="7" column="0">
+        <item row="9" column="0">
          <widget class="QLabel" name="dLabel">
           <property name="font">
            <font>
@@ -211,7 +211,7 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
+        <item row="9" column="1">
          <widget class="QDoubleSpinBox" name="dSpinBox">
           <property name="font">
            <font>
@@ -233,7 +233,7 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
+        <item row="10" column="1">
          <spacer name="verticalSpacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -246,7 +246,7 @@
           </property>
          </spacer>
         </item>
-        <item row="9" column="0">
+        <item row="11" column="0">
          <widget class="QLabel" name="label">
           <property name="font">
            <font>
@@ -259,7 +259,7 @@
           </property>
          </widget>
         </item>
-        <item row="9" column="1">
+        <item row="11" column="1">
          <widget class="QDoubleSpinBox" name="doubleSpinBox">
           <property name="font">
            <font>
@@ -321,6 +321,32 @@
           </property>
          </spacer>
         </item>
+        <item row="3" column="1">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QPushButton" name="resetButton">
+          <property name="font">
+           <font>
+            <family>Consolas</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Reset Model</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -334,6 +360,7 @@
    <class>QwtPlot</class>
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>LinearSim</class>

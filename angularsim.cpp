@@ -7,23 +7,42 @@
 
 AngularSim::AngularSim(QWidget *parent): Model(parent)
 {
-    pid = new PID(0.0, 0.0, 0.0, 0.0, 2 * M_PI, true, timeStep);
+    pid = new PID(0.0, 0.0, 0.0, 0.0, 2 * M_PI, -10, 10, true, timeStep);
     pid->setDerivativeOnInput(true);
 }
 
 void AngularSim::updateModel()
 {
-    double output = pid->calculateOutput(angle, setpoint);
+    std::tuple<double, double, double, double> output = pid->calculateOutput(angle, setpoint);
 
+    emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output));
     //double sign = (0.0 < velocity) - (velocity < 0.0);
     //double air_resistance = sign * velocity * velocity;
-    velocity += output * timeStep;
+    velocity += std::get<0>(output) * timeStep;
     angle += velocity * timeStep;
     angle = std::fmod(angle, 2 * M_PI);
 
     emit modelUpdated(setpoint, angle);
 
     repaint();
+}
+
+std::pair<double, double> AngularSim::inputRange()
+{
+    return std::pair<double, double>(0.0, 2.0 * M_PI);
+}
+
+std::pair<double, double> AngularSim::outputRange()
+{
+    return std::pair<double, double>(-10, 10);
+}
+
+void AngularSim::reset()
+{
+    angle = 0.5 * M_PI;
+    velocity = 0.0;
+    setpoint = 1.5 * M_PI;
+    pid->initialize(angle, 0.0);
 }
 
 void AngularSim::paintEvent(QPaintEvent *) {

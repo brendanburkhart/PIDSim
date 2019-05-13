@@ -13,10 +13,15 @@ class AngularSim : public Model
 public:
     AngularSim(QWidget *parent);
     void updateModel() override;
+    std::pair<double, double> inputRange() override;
+    std::pair<double, double> outputRange() override;
 
 protected:
     void paintEvent(QPaintEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
+
+public slots:
+    void reset() override;
 
 private:
     double angle = 0.5 * M_PI;

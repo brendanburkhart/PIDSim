@@ -12,10 +12,15 @@ class LinearSim : public Model
 public:
     LinearSim(QWidget *parent);
     void updateModel() override;
+    std::pair<double, double> inputRange() override;
+    std::pair<double, double> outputRange() override;
 
 protected:
     void paintEvent(QPaintEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
+
+public slots:
+    void reset() override;
 
 private:
     double position = 0;

@@ -1,12 +1,16 @@
 #include "pid.h"
 #include <algorithm>
 
-PID::PID(double p, double i, double d, double inputMin, double inputMax, bool continuous, double timeStep):
+PID::PID(double p, double i, double d, double inputMin, double inputMax, double outputMin, double outputMax, bool continuous, double timeStep):
     p(p), i(i), d(d), inputMin(inputMin), inputMax(inputMax),
-    outputMin(-200.0), outputMax(200.0),
+    outputMin(outputMin), outputMax(outputMax),
     continuous(continuous), derivativeOnInput(false), timeStep(timeStep)
 {
     initialize(0.0, 0.0);
+}
+
+PID::~PID()
+{
 }
 
 void PID::initialize(double input, double output)
@@ -16,7 +20,7 @@ void PID::initialize(double input, double output)
     prevError = 0.0;
 }
 
-double PID::calculateOutput(double input, double setpoint)
+std::tuple<double, double, double, double> PID::calculateOutput(double input, double setpoint)
 {
     double error = setpoint - input;
     if(continuous)
@@ -37,10 +41,17 @@ double PID::calculateOutput(double input, double setpoint)
     prevError = error;
 
     double output = p * error + iTerm + d * derivative;
+    if (output > outputMax && iTerm > outputMax) {
+        iTerm -= output - outputMax;
+    } else if (output < outputMin && iTerm < outputMin) {
+        iTerm += outputMin - output;
+    }
+    iTerm = std::min(iTerm, outputMax);
+    iTerm = std::max(iTerm, outputMin);
     output = std::min(output, outputMax);
     output = std::max(output, outputMin);
 
-    return output;
+    return std::tuple<double, double, double, double> (output, p * error, iTerm, d * derivative);
 }
 
 void PID::setP(double p)
