@@ -1,9 +1,7 @@
-#include "graph.h"
-
+#include "graphcontroller.h"
 #include <algorithm>
-#include <iostream>
 
-Graph::Graph(QwtPlot *plot, QWidget *parent, QString title):
+GraphController::GraphController(QwtPlot *plot, QWidget *parent, QString title):
     plot(plot)
 {
     setParent(parent);
@@ -15,11 +13,11 @@ Graph::Graph(QwtPlot *plot, QWidget *parent, QString title):
     plot->show();
 }
 
-Graph::~Graph()
+GraphController::~GraphController()
 {
 }
 
-unsigned long long Graph::addSeries(QString name, QPen pen)
+unsigned long long GraphController::addSeries(QString name, QPen pen)
 {
     QwtPlotCurve *curve = new QwtPlotCurve();
 
@@ -37,7 +35,7 @@ unsigned long long Graph::addSeries(QString name, QPen pen)
     return series.size() - 1;
 }
 
-void Graph::addValue(unsigned long long seriesIndex, double value) {
+void GraphController::addValue(unsigned long long seriesIndex, double value) {
     auto &curve = series.at(seriesIndex);
     auto &xData = std::get<0>(curve);
     int size = xData.size();
@@ -58,7 +56,7 @@ void Graph::addValue(unsigned long long seriesIndex, double value) {
     }
 }
 
-void Graph::clear() {
+void GraphController::clear() {
     for (auto &curve : series) {
         std::get<0>(curve).clear();
         std::get<1>(curve).clear();
@@ -67,14 +65,14 @@ void Graph::clear() {
     plot->replot();
 }
 
-void Graph::refresh() {
+void GraphController::refresh() {
     for (auto &curve : series) {
         std::get<2>(curve)->setSamples(std::get<0>(curve), std::get<1>(curve));
     }
     plot->replot();
 }
 
-void Graph::modelEnabled(double yMin, double yMax) {
+void GraphController::modelEnabled(double yMin, double yMax) {
     plot->setAxisScale(QwtPlot::yLeft, yMin, yMax);
     clear();
 }

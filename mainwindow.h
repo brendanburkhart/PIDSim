@@ -29,6 +29,9 @@ private:
     Ui::MainWindow *ui;
     InputGraph *inputGraph;
     OutputGraph *outputGraph;
+
+    static const int ANGULAR = 0;
+    static const int LINEAR = 1;
 };
 
 #endif // MAINWINDOW_H

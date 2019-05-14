@@ -2,8 +2,8 @@
 #define ANGULARSIM_H
 
 #include "model.h"
-#include "pid.h"
 #include "math.h"
+#include "pid.h"
 
 #include <QWidget>
 

@@ -1,8 +1,7 @@
 #include "inputgraph.h"
-#include <iostream>
 
 InputGraph::InputGraph(QwtPlot *plot, QWidget *parent):
-    Graph(plot, parent, "Input and Setpoint")
+    GraphController(plot, parent, "Input and Setpoint")
 {
     spIndex = addSeries("Setpoint", QPen(Qt::green, 4));
     posIndex = addSeries("Position", QPen(Qt::blue, 4));

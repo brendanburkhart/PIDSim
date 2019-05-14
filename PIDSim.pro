@@ -26,24 +26,26 @@ CONFIG += c++11 qwt static
 
 SOURCES += \
         angularsim.cpp \
-        graph.cpp \
+        graphcontroller.cpp \
         inputgraph.cpp \
         linearsim.cpp \
         main.cpp \
         mainwindow.cpp \
         model.cpp \
         outputgraph.cpp \
-        pid.cpp
+        pid.cpp \
+        utils.cpp
 
 HEADERS += \
         angularsim.h \
-        graph.h \
+        graphcontroller.h \
         inputgraph.h \
         linearsim.h \
         mainwindow.h \
         model.h \
         outputgraph.h \
-        pid.h
+        pid.h \
+        utils.h
 
 FORMS += \
         mainwindow.ui

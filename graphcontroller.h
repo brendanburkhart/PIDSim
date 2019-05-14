@@ -1,5 +1,5 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef GRAPHCONTROLLER_H
+#define GRAPHCONTROLLER_H
 
 #include <QWidget>
 
@@ -7,12 +7,12 @@
 #include <qwt_plot_curve.h>
 #include <qwt_abstract_legend.h>
 
-class Graph : public QWidget
+class GraphController : public QWidget
 {
     Q_OBJECT
 public:
-    Graph(QwtPlot *plot, QWidget *parent, QString title);
-    ~Graph();
+    GraphController(QwtPlot *plot, QWidget *parent, QString title);
+    ~GraphController();
 
     unsigned long long addSeries(QString name, QPen pen);
     void addValue(unsigned long long series, double value);
@@ -31,4 +31,4 @@ private:
     static const int maxSize = 100;
 };
 
-#endif // GRAPH_H
+#endif // GRAPHCONTROLLER_H

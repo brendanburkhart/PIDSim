@@ -3,7 +3,7 @@
 #include <qwt_scale_engine.h>
 
 OutputGraph::OutputGraph(QwtPlot *plot, QWidget *parent):
-    Graph(plot, parent, "Output Breakdown")
+    GraphController(plot, parent, "Output Breakdown")
 {
     outputIndex = addSeries("Output", QPen(Qt::black, 4));
     pIndex = addSeries("Proportional", QPen(Qt::red, 4));

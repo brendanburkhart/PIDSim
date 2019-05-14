@@ -1,9 +1,9 @@
 #ifndef OUTPUTGRAPH_H
 #define OUTPUTGRAPH_H
 
-#include "graph.h"
+#include "graphcontroller.h"
 
-class OutputGraph : public Graph
+class OutputGraph : public GraphController
 {
     Q_OBJECT
 public:

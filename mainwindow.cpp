@@ -7,8 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    inputGraph = new InputGraph(ui->qwtPlot, ui->qwtPlot);
-    outputGraph = new OutputGraph(ui->qwtPlot_2, ui->qwtPlot_2);
+    inputGraph = new InputGraph(ui->inputPlot, ui->inputPlot);
+    outputGraph = new OutputGraph(ui->outputPlot, ui->outputPlot);
 
     QObject::connect(ui->pSpinBox, SIGNAL(valueChanged(double)),
                          this, SLOT(setP(double)));
@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
                          this, SLOT(setD(double)));
 
     QObject::connect(ui->modelComboBox, SIGNAL(currentIndexChanged(int)),
-                ui->stackedWidget, SLOT(setCurrentIndex(int)));
+                ui->modelStackWidget, SLOT(setCurrentIndex(int)));
     QObject::connect(ui->modelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(switchModel(int)));
 
@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->linearSim->setSampleTime(0.02);
     ui->angularSim->setSampleTime(0.02);
 
-    ui->modelComboBox->setCurrentIndex(1);
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->modelComboBox->setCurrentIndex(ANGULAR);
+    ui->modelStackWidget->setCurrentIndex(ANGULAR);
 
     std::pair<double, double> range = ui->angularSim->inputRange();
     inputGraph->modelEnabled(range.first, range.second);
@@ -57,10 +57,10 @@ MainWindow::~MainWindow()
 void MainWindow::timerEvent(QTimerEvent *)
 {
     switch (ui->modelComboBox->currentIndex()) {
-    case 0:
+    case LINEAR:
         ui->linearSim->updateModel();
         break;
-    case 1:
+    case ANGULAR:
         ui->angularSim->updateModel();
         break;
     }
@@ -71,13 +71,13 @@ void MainWindow::switchModel(int model)
     std::pair<double, double> inputRange;
 
     switch(model) {
-    case 0:
+    case LINEAR:
         ui->pSpinBox->setValue(ui->linearSim->getP());
         ui->iSpinBox->setValue(ui->linearSim->getI());
         ui->dSpinBox->setValue(ui->linearSim->getD());
         inputRange = ui->linearSim->inputRange();
         break;
-    case 1:
+    case ANGULAR:
         ui->pSpinBox->setValue(ui->angularSim->getP());
         ui->iSpinBox->setValue(ui->angularSim->getI());
         ui->dSpinBox->setValue(ui->angularSim->getD());
@@ -92,10 +92,10 @@ void MainWindow::switchModel(int model)
 void MainWindow::setP(double p)
 {
     switch (ui->modelComboBox->currentIndex()) {
-    case 0:
+    case LINEAR:
         ui->linearSim->setP(p);
         break;
-    case 1:
+    case ANGULAR:
         ui->angularSim->setP(p);
         break;
     }
@@ -104,10 +104,10 @@ void MainWindow::setP(double p)
 void MainWindow::setI(double i)
 {
     switch (ui->modelComboBox->currentIndex()) {
-    case 0:
+    case LINEAR:
         ui->linearSim->setI(i);
         break;
-    case 1:
+    case ANGULAR:
         ui->angularSim->setI(i);
         break;
     }
@@ -116,10 +116,10 @@ void MainWindow::setI(double i)
 void MainWindow::setD(double d)
 {
     switch (ui->modelComboBox->currentIndex()) {
-    case 0:
+    case LINEAR:
         ui->linearSim->setD(d);
         break;
-    case 1:
+    case ANGULAR:
         ui->angularSim->setD(d);
         break;
     }

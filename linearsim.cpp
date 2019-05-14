@@ -17,8 +17,6 @@ void LinearSim::updateModel()
 
     emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output));
 
-    //double sign = (0.0 < velocity) - (velocity < 0.0);
-    //double air_resistance = sign * velocity * velocity;
     velocity -= gravity * timeStep;
     velocity += std::get<0>(output) * timeStep;
     position += velocity * timeStep;

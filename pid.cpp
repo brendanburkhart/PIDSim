@@ -1,4 +1,5 @@
 #include "pid.h"
+#include "utils.h"
 #include <algorithm>
 
 PID::PID(double p, double i, double d, double inputMin, double inputMax, double outputMin, double outputMax, bool continuous, double timeStep):
@@ -106,10 +107,9 @@ void PID::setDerivativeOnInput(bool on)
 double PID::calculateContinuousError(double error)
 {
     const double inputSize = inputMax - inputMin;
-    const double sign = double(0.0 < error) - double(error < 0.0);
     if(std::abs(error) > (inputSize * 0.5))
     {
-        return error - sign * inputSize;
+        return error - utils::signum(error) * inputSize;
     }
     return error;
 }

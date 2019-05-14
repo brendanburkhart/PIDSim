@@ -1,9 +1,9 @@
 #ifndef INPUTGRAPH_H
 #define INPUTGRAPH_H
 
-#include "graph.h"
+#include "graphcontroller.h"
 
-class InputGraph : public Graph
+class InputGraph : public GraphController
 {
     Q_OBJECT
 public:

@@ -1,8 +1,9 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QWidget>
 #include "pid.h"
+
+#include <QWidget>
 
 class Model : public QWidget
 {

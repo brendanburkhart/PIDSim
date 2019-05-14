@@ -1,5 +1,6 @@
 #include "angularsim.h"
 #include "math.h"
+#include "utils.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -16,11 +17,9 @@ void AngularSim::updateModel()
     std::tuple<double, double, double, double> output = pid->calculateOutput(angle, setpoint);
 
     emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output));
-    //double sign = (0.0 < velocity) - (velocity < 0.0);
-    //double air_resistance = sign * velocity * velocity;
     velocity += std::get<0>(output) * timeStep;
     angle += velocity * timeStep;
-    angle = std::fmod(angle, 2 * M_PI);
+    angle = utils::modulus(angle, 2.0 * M_PI);
 
     emit modelUpdated(setpoint, angle);
 
@@ -80,6 +79,6 @@ void AngularSim::mousePressEvent(QMouseEvent *e)
         int w = int(width() * 200.0 / side);
         int x = int((e->x() * 200.0 / side) - 0.5 * w);
         int y = int((e->y() * 200.0 / side) * -1 + 0.5 * h);
-        setpoint = std::fmod(std::atan2(y, x) + 2 * M_PI, 2 * M_PI);
+        setpoint = utils::modulus(std::atan2(y, x), 2.0 * M_PI);
     }
 }
