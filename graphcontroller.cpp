@@ -1,6 +1,8 @@
 #include "graphcontroller.h"
 #include <algorithm>
 
+#include "qwt_legend.h"
+
 GraphController::GraphController(QwtPlot *plot, QWidget *parent, QString title):
     plot(plot)
 {
@@ -8,7 +10,12 @@ GraphController::GraphController(QwtPlot *plot, QWidget *parent, QString title):
     plot->setTitle(title);
     plot->setAxisScale(QwtPlot::xBottom, 0, maxSize);
 
-    legend = plot->legend();
+    QFont legend_font("Arial");
+    legend_font.setPixelSize(60);
+
+    QwtLegend *legend = new QwtLegend();
+    legend->setFont(legend_font);
+    plot->insertLegend(legend, QwtPlot::LeftLegend, 15.0);
 
     plot->show();
 }
@@ -27,7 +34,7 @@ unsigned long long GraphController::addSeries(QString name, QPen pen)
     curve->attach(plot);
 
     curve->setPen(pen);
-
+    curve->setLegendAttribute( QwtPlotCurve::LegendShowLine);
     curve->setTitle(name);
 
     series.push_back(std::tuple<QVector<double>, QVector<double>, QwtPlotCurve*>(axis, data, curve));

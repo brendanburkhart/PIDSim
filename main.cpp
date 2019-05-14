@@ -6,13 +6,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QRect display = QGuiApplication::primaryScreen()->availableGeometry();
-    MainWindow window;
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    int width = int(display.width() * 0.6);
-    int height = int(display.height() * 0.8);
-    window.setGeometry(int(display.x() * 0.5 - width * 0.5), int(display.y() * 0.5 - height * 0.5), width, height);
+    QApplication app(argc, argv);
+
+    QFont font = app.font();
+    font.setPointSize(12);
+    app.setFont(font);
+
+    MainWindow window;
     window.showMaximized();
 
     return app.exec();

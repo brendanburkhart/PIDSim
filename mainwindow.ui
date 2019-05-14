@@ -16,7 +16,20 @@
   <property name="styleSheet">
    <string notr="true">QMainWindow#MainWindow {
     background: #606060
-}</string>
+}
+
+QPushButton {
+    border: none;
+    padding: 0.25em;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #0055ff, stop: 1 #0040e1);
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #2075ff, stop: 1 #2620ff);
+}
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -68,7 +81,7 @@
 }</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="angularSimPage">
          <property name="styleSheet">
@@ -141,8 +154,8 @@
          <widget class="QLabel" name="pLabel">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
@@ -154,9 +167,12 @@
          <widget class="QDoubleSpinBox" name="pSpinBox">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
           <property name="decimals">
            <number>3</number>
@@ -189,8 +205,8 @@
          <widget class="QLabel" name="iLabel">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -204,8 +220,8 @@
          <widget class="QDoubleSpinBox" name="iSpinBox">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="decimals">
@@ -239,8 +255,8 @@
          <widget class="QLabel" name="dLabel">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -254,8 +270,8 @@
          <widget class="QDoubleSpinBox" name="dSpinBox">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="decimals">
@@ -289,12 +305,12 @@
          <widget class="QLabel" name="offsetLabel">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Offset</string>
+           <string>Offset:</string>
           </property>
          </widget>
         </item>
@@ -302,8 +318,8 @@
          <widget class="QDoubleSpinBox" name="offsetSpinBox">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="minimum">
@@ -318,8 +334,8 @@
          <widget class="QComboBox" name="modelComboBox">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <item>
@@ -338,12 +354,12 @@
          <widget class="QLabel" name="modelComboLabel">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>Model Type:</string>
+           <string>Model Type: </string>
           </property>
          </widget>
         </item>
@@ -377,12 +393,18 @@
          <widget class="QPushButton" name="resetButton">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>12</pointsize>
+            <family>Calibri</family>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="text">
            <string>Reset Model</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
