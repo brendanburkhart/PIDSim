@@ -54,3 +54,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+INCLUDEPATH += C:\qwt-static-6.1.4\src
+LIBS += -LC:\qwt-static-6.1.4\lib -lqwt
