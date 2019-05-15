@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
                          this, SLOT(setI(double)));
     QObject::connect(ui->dSpinBox, SIGNAL(valueChanged(double)),
                          this, SLOT(setD(double)));
+    QObject::connect(ui->fSpinBox, SIGNAL(valueChanged(double)),
+                         this, SLOT(setF(double)));
 
     QObject::connect(ui->modelComboBox, SIGNAL(currentIndexChanged(int)),
                 ui->modelStackWidget, SLOT(setCurrentIndex(int)));
@@ -27,15 +29,17 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->angularSim, SIGNAL(modelUpdated(double, double)),
                 inputGraph, SLOT(update(double, double)));
 
-    QObject::connect(ui->linearSim, SIGNAL(outputUpdated(double, double, double, double)),
-                outputGraph, SLOT(update(double, double, double, double)));
-    QObject::connect(ui->angularSim, SIGNAL(outputUpdated(double, double, double, double)),
-                outputGraph, SLOT(update(double, double, double, double)));
+    QObject::connect(ui->linearSim, SIGNAL(outputUpdated(double, double, double, double, double)),
+                outputGraph, SLOT(update(double, double, double, double, double)));
+    QObject::connect(ui->angularSim, SIGNAL(outputUpdated(double, double, double, double, double)),
+                outputGraph, SLOT(update(double, double, double, double, double)));
 
     QObject::connect(ui->resetButton, SIGNAL(clicked()), ui->linearSim, SLOT(reset()));
     QObject::connect(ui->resetButton, SIGNAL(clicked()), ui->angularSim, SLOT(reset()));
     QObject::connect(ui->resetButton, SIGNAL(clicked()), inputGraph, SLOT(clear()));
     QObject::connect(ui->resetButton, SIGNAL(clicked()), outputGraph, SLOT(clear()));
+
+    QObject::connect(ui->frictionCheckBox, SIGNAL(clicked(bool)), this, SLOT(enableFriction(bool)));
 
     ui->linearSim->setSampleTime(0.02);
     ui->angularSim->setSampleTime(0.02);
@@ -75,12 +79,14 @@ void MainWindow::switchModel(int model)
         ui->pSpinBox->setValue(ui->linearSim->getP());
         ui->iSpinBox->setValue(ui->linearSim->getI());
         ui->dSpinBox->setValue(ui->linearSim->getD());
+        ui->fSpinBox->setValue(ui->linearSim->getFeedforward());
         inputRange = ui->linearSim->inputRange();
         break;
     case ANGULAR:
         ui->pSpinBox->setValue(ui->angularSim->getP());
         ui->iSpinBox->setValue(ui->angularSim->getI());
         ui->dSpinBox->setValue(ui->angularSim->getD());
+        ui->fSpinBox->setValue(ui->angularSim->getFeedforward());
         inputRange = ui->angularSim->inputRange();
         break;
     default:
@@ -125,5 +131,26 @@ void MainWindow::setD(double d)
     }
 }
 
+void MainWindow::setF(double f)
+{
+    switch (ui->modelComboBox->currentIndex()) {
+    case LINEAR:
+        ui->linearSim->setFeedforward(f);
+        break;
+    case ANGULAR:
+        ui->angularSim->setFeedforward(f);
+        break;
+    }
+}
 
-
+void MainWindow::enableFriction(bool enabled)
+{
+    switch (ui->modelComboBox->currentIndex()) {
+    case LINEAR:
+        ui->linearSim->enableFriction(enabled);
+        break;
+    case ANGULAR:
+        ui->angularSim->enableFriction(enabled);
+        break;
+    }
+}

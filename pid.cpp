@@ -21,7 +21,7 @@ void PID::initialize(double input, double output)
     prevError = 0.0;
 }
 
-std::tuple<double, double, double, double> PID::calculateOutput(double input, double setpoint)
+std::tuple<double, double, double, double, double> PID::calculateOutput(double input, double setpoint)
 {
     double error = setpoint - input;
     if(continuous)
@@ -41,18 +41,19 @@ std::tuple<double, double, double, double> PID::calculateOutput(double input, do
     prevInput = input;
     prevError = error;
 
-    double output = p * error + iTerm + d * derivative;
+    double output = p * error + iTerm + d * derivative + feedforward;
     if (output > outputMax && iTerm > outputMax) {
         iTerm -= output - outputMax;
     } else if (output < outputMin && iTerm < outputMin) {
         iTerm += outputMin - output;
     }
+
     iTerm = std::min(iTerm, outputMax);
     iTerm = std::max(iTerm, outputMin);
     output = std::min(output, outputMax);
     output = std::max(output, outputMin);
 
-    return std::tuple<double, double, double, double> (output, p * error, iTerm, d * derivative);
+    return std::tuple<double, double, double, double, double> (output, p * error, iTerm, d * derivative, feedforward);
 }
 
 void PID::setP(double p)
@@ -70,6 +71,11 @@ void PID::setD(double d)
     this->d = d / timeStep;
 }
 
+void PID::setFeedforward(double f)
+{
+    feedforward = f;
+}
+
 double PID::getP()
 {
     return p;
@@ -83,6 +89,11 @@ double PID::getI()
 double PID::getD()
 {
     return d * timeStep;
+}
+
+double PID::getFeedforward()
+{
+    return feedforward;
 }
 
 void PID::setTimeStep(double t)

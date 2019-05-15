@@ -22,6 +22,9 @@ public slots:
     void setP(double p);
     void setI(double i);
     void setD(double d);
+    void setF(double f);
+
+    void enableFriction(bool enabled);
 
     void switchModel(int model);
 

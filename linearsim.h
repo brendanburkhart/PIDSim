@@ -27,6 +27,8 @@ private:
     double velocity = 0.0;
     double gravity = 20;
 
+    double air_resistance = 0.1;
+
     double setpoint = 75;
 };
 

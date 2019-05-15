@@ -1,5 +1,6 @@
 #include "linearsim.h"
 #include "math.h"
+#include "utils.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -13,12 +14,17 @@ LinearSim::LinearSim(QWidget *parent): Model(parent)
 
 void LinearSim::updateModel()
 {
-    std::tuple<double, double, double, double> output = pid->calculateOutput(position, setpoint);
+    std::tuple<double, double, double, double, double> output = pid->calculateOutput(position, setpoint);
 
-    emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output));
+    emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output), std::get<4>(output));
 
     velocity -= gravity * timeStep;
     velocity += std::get<0>(output) * timeStep;
+
+    if(frictionEnabled) {
+        velocity -= air_resistance * utils::signum(velocity) * velocity * velocity * timeStep;
+    }
+
     position += velocity * timeStep;
 
     emit modelUpdated(setpoint, position);
