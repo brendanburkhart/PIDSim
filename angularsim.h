@@ -26,8 +26,8 @@ public slots:
 private:
     double angle = 0.5 * M_PI;
     double velocity = 0.0;
-    double dynamic_friction = 0.8;
-    double static_friction = 1.5;
+    double dynamic_friction = 1.5;
+    double static_friction = 5.0;
 
     double setpoint = 1.5 * M_PI;
 };

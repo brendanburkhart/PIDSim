@@ -19,15 +19,16 @@ void AngularSim::updateModel()
     std::tuple<double, double, double, double, double> output = pid->calculateOutput(angle, setpoint);
 
     emit outputUpdated(std::get<0>(output), std::get<1>(output), std::get<2>(output), std::get<3>(output), std::get<4>(output));
-    velocity += std::get<0>(output) * timeStep;
 
     if(frictionEnabled) {
-        if(std::abs(velocity) < 0.01) {
-            velocity -= std::min(std::max(std::abs(std::get<0>(output)), static_friction), static_friction) * timeStep * utils::signum(std::get<0>(output));
+        if(std::abs(velocity) < 0.005) {
+            velocity -= std::min(std::abs(std::get<0>(output)), static_friction) * timeStep * utils::signum(std::get<0>(output));
         } else {
             velocity -= dynamic_friction * timeStep * utils::signum(velocity);
         }
     }
+
+    velocity += std::get<0>(output) * timeStep;
 
     angle += velocity * timeStep;
     angle = utils::modulus(angle, 2.0 * M_PI);
